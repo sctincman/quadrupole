@@ -7,10 +7,10 @@ function Vr = quadrupole(R, Q)
     unit_v = R / nR;
     for i=1:3
       for j=1:3
-	sum = sum + (Q(i,j) * 3.3356e-30 * 1e-10 * unit_v(i) * unit_v(j));
+	sum = sum + (Q(i,j) * 3.3356e-40 * unit_v(i) * unit_v(j));
       end
     end
-    Vr = (k / ((norm(R)*1e-10)^3)) * sum;
+    Vr = (k / ((nR*1e-10)^3)) * sum;
   else
     Vr = 0;
   end
