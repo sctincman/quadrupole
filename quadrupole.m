@@ -1,19 +1,12 @@
-%R in angstroms, Q in Debye-Angstrom
-function Vr = quadrupole(R, Q)
-  k =  8.9876e+09;
-  sum = 0;
-  nR = norm(R);
-  if (nR != 0)
-    unit_v = R / nR;
-    for i=1:3
-      for j=1:3
-	sum = sum + (Q(i,j) * 3.3356e-40 * unit_v(i) * unit_v(j));
-      end
-    end
-    Vr = (k / ((nR*1e-10)^3)) * sum;
-  else
-    Vr = 0;
-  end
+% returns contributions to potential field from quadrupole
+% x,y,z are the x,y,z coordinates that map to V,C
+% V is the result at each point
+function [x, y, z, V] = quadrupole(Q)
+  [x,y,z] = meshgrid([-2.5:0.2:2.5], [-2.5:0.2:2.5], [-1.5:0.2:1.5]);
+
+  V = arrayfun(@(x,y,z) Vr([x,y,z], Q), x, y, z);
+%  V = [];
+%  for i=1:length(x(:))
+%    V = [V, quadrupole([x(:)(i),y(:)(i),z(:)(i)], Q)];
+%  end
 endfunction
-
-
